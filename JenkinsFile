@@ -13,6 +13,32 @@ pipeline {
                 bat 'xcopy C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\puebaSemana1_pipeline C:\\servidor\\spring /E /I /Y'
             }
         }
+        stage('Enviar mensaje') {
+            steps {
+                script {
+                    def pythonScript = """
+                    import smtplib
+                    from email.mime.text import MIMEText
+
+                    def send_email():
+                        msg = MIMEText("El pipeline ha finalizado correctamente.")
+                        msg['Subject'] = 'Notificación de Jenkins'
+                        msg['From'] = 'denischasipanta2003@gmail.com'
+                        msg['To'] = 'deliareyes682@gmail.comm'
+
+                        with smtplib.SMTP('smtp.example.com', 587) as server:
+                            server.starttls()
+                            server.login('denischasipanta2003@gmail.com', 'Denis2003chasi')
+                            server.sendmail('denischasipanta2003@gmail.com', ['deliareyes682@gmail.com'], msg.as_string())
+
+                    if __name__ == "__main__":
+                        send_email()
+                    """
+                    writeFile file: 'send_email.py', text: pythonScript
+                    bat 'python send_email.py'
+                }
+            }
+        }
 
     }
 }
