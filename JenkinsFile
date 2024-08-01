@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clonar repositorio') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Mover proyecto') {
+            steps {
+                sh 'cp -r . C:/servidor/nginx-1.26.1'
+            }
+        }
+
+        stage('Ejecutar servidor nginx') {
+            steps {
+                sh 'sudo systemctl restart nginx'
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                
+                sh 'python3 C:/Users/denis/OneDrive/Escritorio/Integracionsistemas/app-isi-t1'
+            }
+        }
+    }
+}
