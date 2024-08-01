@@ -10,15 +10,10 @@ pipeline {
 
         stage('Mover proyecto') {
             steps {
-                sh 'cp -r . C:/servidor/nginx-1.26.1'
+                bat 'xcopy C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\puebaSemana1_pipeline C:\\servidor\\spring /E /I /Y'
             }
         }
 
-        stage('Ejecutar servidor nginx') {
-            steps {
-                sh 'sudo systemctl restart nginx'
-            }
-        }
     }
 
     post {
