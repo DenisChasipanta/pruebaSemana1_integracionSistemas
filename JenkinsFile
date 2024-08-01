@@ -15,13 +15,4 @@ pipeline {
         }
 
     }
-
-    post {
-        always {
-            script {
-                
-                sh 'python3 C:/Users/denis/OneDrive/Escritorio/Integracionsistemas/app-isi-t1'
-            }
-        }
-    }
 }
